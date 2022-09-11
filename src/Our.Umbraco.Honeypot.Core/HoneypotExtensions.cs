@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Web;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Text;
-using System.Xml.Linq;
 
 
 #if NETFRAMEWORK
@@ -29,7 +26,7 @@ namespace Our.Umbraco.Honeypot.Core
         public static bool IsHoneypotTrapped(this HttpContext httpContext)
         {
 
-            #if NETFRAMEWORK
+#if NETFRAMEWORK
             HoneypotService service = Current.Factory.GetInstance<HoneypotService>();
 #else
             HoneypotService service = httpContext.RequestServices.GetRequiredService<HoneypotService>();
@@ -39,7 +36,7 @@ namespace Our.Umbraco.Honeypot.Core
             return isTrapped;
         }
 
-        #if NETFRAMEWORK
+#if NETFRAMEWORK
         public static IHtmlString HoneypotTimeField(this HtmlHelper helper, HoneypotOptions options = null)
         {
             if(options == null)
@@ -81,12 +78,18 @@ namespace Our.Umbraco.Honeypot.Core
             var html = new StringBuilder();
 
             html.AppendLine($"<div class=\"{options.HoneypotFieldClass} {fieldName}\" style=\"{options.HoneypotFieldStyles}\">");
+            if (type == "text")
+            {
+                html.AppendLine(
+                    $"<label for=\"{fieldName}\" class=\"{options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" placeholder=\"\" style=\"{options.HoneypotFieldStyles}\">&nbsp;</label>");
+            }
+
             html.AppendLine($"<input type=\"{type}\" name=\"{fieldName}\" id=\"{fieldName}\" />");
             html.AppendLine(" </div>");
 
             return new HtmlString(html.ToString());
         }
 
-        #endif
+#endif
     }
 }

@@ -55,7 +55,6 @@
     </Reference>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Examine, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Examine.1.2.2\lib\net452\Examine.dll</HintPath>
@@ -111,16 +110,15 @@
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.2\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
@@ -149,8 +147,8 @@
     <Reference Include="MiniProfiler.Shared, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
       <HintPath>..\packages\MiniProfiler.Shared.4.0.138\lib\net461\MiniProfiler.Shared.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPoco, Version=3.9.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NPoco.3.9.4\lib\net45\NPoco.dll</HintPath>
@@ -239,7 +237,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.9.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -487,24 +485,25 @@
     <Content Include="config\imageprocessor\cache.config" />
     <Content Include="config\umbracoSettings.config" />
     <Content Include="Media\Web.config" />
+    <Content Include="config\ClientDependency.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Honeypot.cshtml" />
     <Content Include="config\tinyMceConfig.config" />
     <Content Include="config\serilog.user.config" />
     <Content Include="config\serilog.config" />
     <Content Include="config\HealthChecks.config" />
-    <Content Include="config\ClientDependency.config" />
     <Content Include="config\BackOfficeTours\getting-started.json" />
-    <Content Include="App_Plugins\umbracoforms\UmbracoForms.config" />
-    <Content Include="App_Plugins\umbracoforms\RazorTemplates\HtmlTable.cshtml" />
-    <Content Include="App_Plugins\umbracoforms\package.manifest" />
-    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.woff" />
-    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.ttf" />
-    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.eot" />
-    <Content Include="App_Plugins\umbracoforms\Data\Web.config" />
-    <Content Include="App_Plugins\umbracoforms\Data\Templates\contactform.json" />
-    <Content Include="App_Plugins\umbracoforms\Data\Templates\commentform.json" />
     <Content Include="App_Plugins\umbracoforms\Assets\aspnet-client-validation\dist\aspnet-validation.min.js.map" />
+    <Content Include="App_Plugins\umbracoforms\Data\Templates\commentform.json" />
+    <Content Include="App_Plugins\umbracoforms\Data\Templates\contactform.json" />
+    <Content Include="App_Plugins\umbracoforms\Data\Web.config" />
+    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.eot" />
+    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.ttf" />
+    <Content Include="App_Plugins\umbracoforms\Fonts\icomoon.woff" />
+    <Content Include="App_Plugins\umbracoforms\package.manifest" />
+    <Content Include="App_Plugins\umbracoforms\RazorTemplates\HtmlTable.cshtml" />
+    <Content Include="App_Plugins\umbracoforms\UmbracoForms.config" />
     <None Include="packages.config" />
-    <Content Include="Views\Web.config" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Rte.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Media.cshtml" />
@@ -554,7 +553,6 @@
     <Content Include="Views\Partials\Forms\Emails\Example-Template.cshtml" />
     <Content Include="Views\MacroPartials\RenderUmbracoFormScripts.cshtml" />
     <Content Include="Views\MacroPartials\InsertUmbracoFormWithTheme.cshtml" />
-    <Content Include="Views\Partials\Forms\Themes\default\Fieldtypes\FieldType.Honeypot.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -568,6 +566,7 @@
       <Name>Our.Umbraco.Honeypot.V8</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

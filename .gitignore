@@ -45,3 +45,4 @@ src/Our.Umbraco.Honeypot.WebsiteV8/App_Plugins/umbracoforms
 src/Our.Umbraco.Honeypot.WebsiteV8/Umbraco
 *.user
 /src/Our.Umbraco.Honeypot.V8/bin/Debug/net472
+*.DotSettings

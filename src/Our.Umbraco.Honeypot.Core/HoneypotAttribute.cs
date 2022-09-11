@@ -6,12 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 #endif
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Our.Umbraco.Honeypot.Core
 {
@@ -21,7 +16,7 @@ namespace Our.Umbraco.Honeypot.Core
         {
             base.OnActionExecuting(context);
 
-            #if NETFRAMEWORK
+#if NETFRAMEWORK
             
             bool isTrapped = context.HttpContext.ApplicationInstance.Context.IsHoneypotTrapped();
 
@@ -30,15 +25,15 @@ namespace Our.Umbraco.Honeypot.Core
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
                 context.Result = new ContentResult() { Content = "bot detection", ContentType = "text/plain" };
             }
-            #else
+#else
 
             bool isTrapped = context.HttpContext.IsHoneypotTrapped();
 
             if (isTrapped == true)
             {
-                context.Result = new ContentResult() { Content = "bot detection", ContentType = "text/plain", StatusCode  = (int)HttpStatusCode.OK };
+                context.Result = new ContentResult() { Content = "bot detection", ContentType = "text/plain", StatusCode = (int)HttpStatusCode.OK };
             }
-            #endif
+#endif
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Our.Umbraco.Honeypot.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Umbraco.Forms.Core.Enums;
 using Umbraco.Forms.Core.Models;
 using Umbraco.Forms.Core.Services;
@@ -25,7 +22,7 @@ namespace Our.Umbraco.Honeypot
             this.SortOrder = 10;
             this.FieldTypeViewName = "FieldType.Honeypot.cshtml";
             this.HideLabel = true;
-            
+
             Options = options.Value;
         }
 
@@ -44,7 +41,7 @@ namespace Our.Umbraco.Honeypot
             {
                 returnStrings.Add(Options.HoneypotMessage);
             }
-            
+
             return returnStrings;
         }
     }

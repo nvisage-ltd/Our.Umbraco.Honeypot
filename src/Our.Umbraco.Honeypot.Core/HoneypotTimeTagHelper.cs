@@ -1,8 +1,8 @@
-﻿
+
 #if NET5_0_OR_GREATER
+using System;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace Our.Umbraco.Honeypot.Core
 {
@@ -26,7 +26,6 @@ namespace Our.Umbraco.Honeypot.Core
             {
                 return;
             }
-                
 
             output.TagMode = TagMode.StartTagAndEndTag;
             output.TagName = "div";
@@ -34,7 +33,8 @@ namespace Our.Umbraco.Honeypot.Core
             output.Attributes.Add("class", $"{Options.HoneypotFieldClass} hp-{Options.HoneypotTimeFieldName}");
             output.Attributes.Add("style", Options.HoneypotFieldStyles);
 
-            output.Content.AppendHtml($"<input type=\"hidden\" value=\"{DateTime.UtcNow.Ticks}\" name=\"{Options.HoneypotTimeFieldName}\" id=\"{Options.HoneypotTimeFieldName}\" />");
+            output.Content.AppendHtml(
+                $"<input type=\"hidden\" value=\"{DateTime.UtcNow.Ticks}\" name=\"{Options.HoneypotTimeFieldName}\" id=\"{Options.HoneypotTimeFieldName}\" />");
         }
     }
 }

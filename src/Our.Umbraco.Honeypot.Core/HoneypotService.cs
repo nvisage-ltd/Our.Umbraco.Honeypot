@@ -1,4 +1,4 @@
-﻿
+
 using System.Web;
 
 #if NETFRAMEWORK
@@ -11,8 +11,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
-using System.Net.Http;
-using System.Collections.Generic;
 
 namespace Our.Umbraco.Honeypot.Core
 {
@@ -25,11 +23,11 @@ namespace Our.Umbraco.Honeypot.Core
 
         public bool IsTrapped(HttpContext httpContext)
         {
-            return IsTrapped(httpContext);
+            return httpContext.IsHoneypotTrapped();
         }
 
 #if NETFRAMEWORK
-            public HoneypotService(HoneypotOptions options)
+        public HoneypotService(HoneypotOptions options)
         {
             Options = options;
         }
@@ -38,16 +36,16 @@ namespace Our.Umbraco.Honeypot.Core
         {
             fieldTrap = false;
             timeTrap = false;
-            
+
             if (!httpContext.Items.Contains(HttpContextItemName) || (httpContext.Items[HttpContextItemName] is bool value) == false)
             {
-                
+
                 bool trapped = false;
 
                 if (Options.HoneypotEnableFieldCheck)
                 {
                     //check fields
-                    foreach(var inputKey in httpContext.Request.Form.AllKeys)
+                    foreach (var inputKey in httpContext.Request.Form.AllKeys)
                     {
                         if (Options.HoneypotIsFieldName(inputKey) && !string.IsNullOrEmpty(httpContext.Request.Form[inputKey]))
                         {
@@ -91,7 +89,7 @@ namespace Our.Umbraco.Honeypot.Core
             fieldTrap = false;
             timeTrap = false;
 
-            if (httpContext.Items.TryGetValue(HttpContextItemName, out object? value) == false)
+            if (httpContext.Items.TryGetValue(HttpContextItemName, out object value) == false)
             {
 
                 bool trapped = false;

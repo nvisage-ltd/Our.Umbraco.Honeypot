@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Our.Umbraco.Honeypot.Core
 {
     public class HoneypotOptions
     {
-        #if NETFRAMEWORK
+#if NETFRAMEWORK
         public HoneypotOptions()
         {
             HoneypotEnableFieldCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableFieldCheck"] ?? "true");
-            HoneypotEnableTimeCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableTimeCheck"] ?? "true"); ;
+            HoneypotEnableTimeCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableTimeCheck"] ?? "true");
             HoneypotPrefixFieldName = ConfigurationManager.AppSettings["HoneypotPrefixFieldName"] ?? "hp_";
             HoneypotSuffixFieldName = ConfigurationManager.AppSettings["HoneypotSuffixFieldName"] ?? "";
             HoneypotTimeFieldName = ConfigurationManager.AppSettings["HoneypotTimeFieldName"] ?? "__time";
@@ -24,9 +19,9 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new string[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
             HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Something went wrong (HP)";
         }
-        #endif
+#endif
 
-        #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
         public HoneypotOptions()
         {
             HoneypotEnableFieldCheck = true;
@@ -41,7 +36,7 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotMessage = "Something went wrong (HP)";
 
         }
-        #endif
+#endif
 
         public bool HoneypotEnableFieldCheck { get; set; }
 
@@ -52,24 +47,24 @@ namespace Our.Umbraco.Honeypot.Core
         public string HoneypotFieldClass { get; set; }
 
         public string[] HoneypotFieldNames { get; set; }
-        
+
         public bool HoneypotEnableTimeCheck { get; set; }
-        
+
         public string HoneypotPrefixFieldName { get; set; }
 
-        #if NETFRAMEWORK
+#if NETFRAMEWORK
         public string HoneypotSuffixFieldName { get; set; }
-        #else
-        public string? HoneypotSuffixFieldName { get; set; }
-        #endif
+#else
+        public string HoneypotSuffixFieldName { get; set; }
+#endif
 
         public string HoneypotTimeFieldName { get; set; }
-        
+
         public TimeSpan HoneypotMinTimeDuration { get; set; }
 
         internal bool HoneypotIsFieldName(string name)
         {
-            if(!string.IsNullOrWhiteSpace(HoneypotPrefixFieldName))
+            if (!string.IsNullOrWhiteSpace(HoneypotPrefixFieldName))
                 return name.StartsWith($"{HoneypotPrefixFieldName}");
 
             if (!string.IsNullOrWhiteSpace(HoneypotSuffixFieldName))

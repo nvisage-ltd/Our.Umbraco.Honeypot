@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 
 #if NETFRAMEWORK
@@ -11,9 +11,9 @@ using Umbraco.Cms.Core.DependencyInjection;
 
 namespace Our.Umbraco.Honeypot.Core
 {
-    
-    
-    #if NETFRAMEWORK
+
+
+#if NETFRAMEWORK
     public class Composer : IComposer
     {
         public void Compose(Composition composition)
@@ -23,16 +23,16 @@ namespace Our.Umbraco.Honeypot.Core
         }
     }
 
-    #else
+#else
     public class Composer : IComposer
     {
         public void Compose(IUmbracoBuilder builder)
         {
-            
+
             builder.Services.Configure<HoneypotOptions>(builder.Config.GetSection("Our.Umbraco.Honeypot"));
             builder.Services.AddTransient<HoneypotService>();
         }
     }
 
-    #endif
+#endif
 }

@@ -1,35 +1,33 @@
 ﻿using Our.Umbraco.Honeypot.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Umbraco.Core.Composing;
-using Umbraco.Web.Composing;
 using Umbraco.Core;
+using Umbraco.Core.Composing;
+using Umbraco.Forms.Mvc;
+using Umbraco.Forms.Web.Controllers;
+using Current = Umbraco.Web.Composing.Current;
 
-namespace Our.Umbraco.Honeypot
+namespace Our.Umbraco.Honeypot.V8
 {
     public class HoneypotComposer : IUserComposer
     {
         public void Compose(Composition composition)
         {
-            global::Umbraco.Forms.Web.Controllers.UmbracoFormsController.FormValidate += FormsController_FormValidate;
+            UmbracoFormsController.FormValidate += FormsController_FormValidate;
         }
-        
-        private void FormsController_FormValidate(object sender, global::Umbraco.Forms.Mvc.FormValidationEventArgs e)
-        {
-            var options = global::Umbraco.Web.Composing.Current.Factory.GetInstance<HoneypotOptions>();
-            
-            if (!options.HoneypotEnableFieldCheck && !options.HoneypotEnableTimeCheck)
-                return;
 
-            var controller = sender as global::Umbraco.Forms.Web.Controllers.UmbracoFormsController;
+        private void FormsController_FormValidate(object sender, FormValidationEventArgs e)
+        {
+            HoneypotOptions options = Current.Factory.GetInstance<HoneypotOptions>();
+
+            if (!options.HoneypotEnableFieldCheck && !options.HoneypotEnableTimeCheck)
+            {
+                return;
+            }
+
+            var controller = sender as UmbracoFormsController;
 
             if (e.Context.IsHoneypotTrapped())
             {
-                controller.ModelState.AddModelError("error", options.HoneypotMessage);
+                controller?.ModelState.AddModelError("error", options.HoneypotMessage);
             }
         }
     }
