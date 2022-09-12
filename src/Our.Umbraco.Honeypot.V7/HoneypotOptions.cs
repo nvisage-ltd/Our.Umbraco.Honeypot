@@ -1,11 +1,10 @@
 using System;
 using System.Configuration;
 
-namespace Our.Umbraco.Honeypot.Core
+namespace Our.Umbraco.Honeypot
 {
     public class HoneypotOptions
     {
-#if NETFRAMEWORK
         public HoneypotOptions()
         {
             HoneypotEnableFieldCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableFieldCheck"] ?? "true");
@@ -19,29 +18,10 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
             HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Something went wrong (HP)";
             HoneypotNoTags = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
-        }
-#endif
-
-#if NET5_0_OR_GREATER
-        public HoneypotOptions()
-        {
-            HoneypotEnableFieldCheck = true;
-            HoneypotEnableTimeCheck = true;
-            HoneypotPrefixFieldName = "hp_";
-            HoneypotSuffixFieldName = "";
-            HoneypotTimeFieldName = "__time";
-            HoneypotMinTimeDuration = TimeSpan.FromSeconds(2);
-            HoneypotFieldStyles = "display: none !important; position: absolute !important; left: -9000px !important;";
-            HoneypotFieldClass = "hp-field";
-            HoneypotFieldNames = new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
-            HoneypotMessage = "Something went wrong (HP)";
-            HoneypotNoTags = false;
 
         }
-#endif
 
         public bool HoneypotNoTags { get; set; }
-
         public bool HoneypotEnableFieldCheck { get; set; }
 
         public string HoneypotMessage { get; set; }
@@ -56,11 +36,7 @@ namespace Our.Umbraco.Honeypot.Core
 
         public string HoneypotPrefixFieldName { get; set; }
 
-#if NETFRAMEWORK
         public string HoneypotSuffixFieldName { get; set; }
-#else
-        public string HoneypotSuffixFieldName { get; set; }
-#endif
 
         public string HoneypotTimeFieldName { get; set; }
 

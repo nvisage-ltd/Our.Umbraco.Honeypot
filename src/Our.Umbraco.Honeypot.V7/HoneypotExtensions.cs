@@ -1,16 +1,9 @@
-﻿#if NETFRAMEWORK
-using System;
+﻿using System;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Umbraco.Core;
-using Umbraco.Web.Composing;
-#else
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
-#endif
 
-namespace Our.Umbraco.Honeypot.Core
+namespace Our.Umbraco.Honeypot
 {
     public static class HoneypotExtensions
     {
@@ -20,26 +13,21 @@ namespace Our.Umbraco.Honeypot.Core
         /// </summary>
         /// <param name="httpContext"></param>
         /// <returns></returns>
-        ///
+        /// 
         public static bool IsHoneypotTrapped(this HttpContext httpContext)
         {
 
-#if NETFRAMEWORK
-            HoneypotService service = Current.Factory.GetInstance<HoneypotService>();
-#else
-            HoneypotService service = httpContext.RequestServices.GetRequiredService<HoneypotService>();
-#endif
-            var isTrapped = service.IsTrapped(httpContext, out var fieldTrapped, out var timeTrapped);
+            HoneypotService service = DependencyResolver.Current.GetService<HoneypotService>();
+            var isTrapped = service.IsTrapped(httpContext, out _, out _);
 
             return isTrapped;
         }
 
-#if NETFRAMEWORK
         public static IHtmlString HoneypotTimeField(this HtmlHelper helper, HoneypotOptions options = null)
         {
             if (options == null)
             {
-                options = Current.Factory.GetInstance<HoneypotOptions>();
+                options = DependencyResolver.Current.GetService<HoneypotOptions>();
             }
 
             if (!options.HoneypotEnableTimeCheck)
@@ -61,7 +49,7 @@ namespace Our.Umbraco.Honeypot.Core
         {
             if (options == null)
             {
-                options = Current.Factory.GetInstance<HoneypotOptions>();
+                options = DependencyResolver.Current.GetService<HoneypotOptions>();
             }
 
             if (!options.HoneypotEnableFieldCheck)
@@ -92,6 +80,5 @@ namespace Our.Umbraco.Honeypot.Core
             return new HtmlString(html.ToString());
         }
 
-#endif
     }
 }

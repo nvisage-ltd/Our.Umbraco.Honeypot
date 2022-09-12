@@ -1,14 +1,7 @@
-﻿
-
-#if NETFRAMEWORK
+﻿using System.Net;
 using System.Web.Mvc;
-#else
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-#endif
-using System.Net;
 
-namespace Our.Umbraco.Honeypot.Core
+namespace Our.Umbraco.Honeypot
 {
     public class HoneypotAttribute : ActionFilterAttribute
     {
@@ -16,7 +9,6 @@ namespace Our.Umbraco.Honeypot.Core
         {
             base.OnActionExecuting(context);
 
-#if NETFRAMEWORK
 
             var isTrapped = context.HttpContext.ApplicationInstance.Context.IsHoneypotTrapped();
 
@@ -25,15 +17,6 @@ namespace Our.Umbraco.Honeypot.Core
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
                 context.Result = new ContentResult() { Content = "bot detection", ContentType = "text/plain" };
             }
-#else
-
-            bool isTrapped = context.HttpContext.IsHoneypotTrapped();
-
-            if (isTrapped)
-            {
-                context.Result = new ContentResult() { Content = "bot detection", ContentType = "text/plain", StatusCode = (int)HttpStatusCode.OK };
-            }
-#endif
         }
     }
 }

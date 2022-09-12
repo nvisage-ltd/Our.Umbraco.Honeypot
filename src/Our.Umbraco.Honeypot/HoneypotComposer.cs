@@ -9,8 +9,8 @@ namespace Our.Umbraco.Honeypot
     {
         public void Compose(IUmbracoBuilder builder)
         {
-            builder.WithCollectionBuilder<FieldCollectionBuilder>().Add<HoneypotFieldType>();
-            builder.AddNotificationHandler<FormValidateNotification, HoneypotValidationNotificationHandler>();
+            _ = builder.WithCollectionBuilder<FieldCollectionBuilder>().Add<HoneypotFieldType>();
+            _ = builder.AddNotificationHandler<FormValidateNotification, HoneypotValidationNotificationHandler>();
         }
     }
 }

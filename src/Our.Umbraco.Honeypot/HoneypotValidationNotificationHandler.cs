@@ -18,7 +18,9 @@ namespace Our.Umbraco.Honeypot
         public void Handle(FormValidateNotification notification)
         {
             if (!Options.HoneypotEnableFieldCheck && !Options.HoneypotEnableTimeCheck)
+            {
                 return;
+            }
 
             if (notification.Context.IsHoneypotTrapped())
             {

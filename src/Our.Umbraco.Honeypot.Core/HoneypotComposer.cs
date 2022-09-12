@@ -1,10 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-
-
 #if NETFRAMEWORK
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 #else
+using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 #endif

@@ -1,12 +1,12 @@
-﻿@model Umbraco.Forms.Mvc.Models.FieldViewModel
-@using Our.Umbraco.Honeypot.Core
+﻿@using Our.Umbraco.Honeypot.Core
+@using Umbraco.Core
 @using Umbraco.Core.Composing
-@using Umbraco.Web.Composing
+@model Umbraco.Forms.Mvc.Models.FieldViewModel
 
 
 @{
-    var options = global::Umbraco.Web.Composing.Current.Factory.GetInstance<HoneypotOptions>();
+  HoneypotOptions options = Current.Factory.GetInstance<HoneypotOptions>();
 }
 
-@Html.HoneypotTimeField(options: options)
+@Html.HoneypotTimeField(options)
 @Html.HoneypotField(options: options)

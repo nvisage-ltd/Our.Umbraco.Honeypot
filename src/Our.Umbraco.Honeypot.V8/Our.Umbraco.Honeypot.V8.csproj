@@ -23,6 +23,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Our.Umbraco.HoneyPot</Title>
 		<PackageReleaseNotes>v8 support</PackageReleaseNotes>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace(".V8", ""))</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

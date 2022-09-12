@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+		<id>Our.Umbraco.Honeypot.V7</id>
+		<version>0.1.4.0-beta</version>
+		<title>Our.Umbraco.Honeypot.V7</title>
+		<authors>Björnmamman, nvisage-gf</authors>
+		<owners>https://bjornmamman.se/</owners>
+		<description>Our.Umbraco.Honeypot.V7</description>
+		<summary>A basic Honeypot to trap bots from posting your forms, it can be used with Umbraco Forms or on custom forms. The idea is simple, add a random hidden field, if the field is populated and posted = it's probably a bot</summary>
+		<language>en-GB</language>
+		<license type="expression">MIT</license>
+		<projectUrl>https://github.com/madsoulswe/Our.Umbraco.Honeypot/</projectUrl>
+		<icon>content\App_Data\Temp\icon.png</icon>
+		<!--<readme>content\App_Data\Temp\README.md</readme>-->
+		<dependencies>
+			<group targetFramework=".NETFramework4.5.2">
+				<dependency id="UmbracoCms.Core" version="[7.15.8,8)" />
+				<dependency id="UmbracoForms.Core" version="[7.5.9,8)" />
+				<dependency id="Our.Umbraco.IoC" version="[1.1.0,2)" />
+				<dependency id="Our.Umbraco.IoC.Autofac" version="[1.0.0,2)" />
+			</group>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="bin\Release\Our.Umbraco.Honeypot.V7.dll" target="lib\net452" />
+		<file src="App_Plugins\**\*.*" target="content\App_Plugins" />
+		<file src="Views\**\*.*" target="content\Views" />
+		<!--<file src="README.md" target="content\App_Data\Temp\" />-->
+		<file src="icon.png" target="content\App_Data\Temp\" />
+	</files>
+</package>
+

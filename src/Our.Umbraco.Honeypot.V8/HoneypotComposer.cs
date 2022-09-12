@@ -5,7 +5,7 @@ using Umbraco.Forms.Mvc;
 using Umbraco.Forms.Web.Controllers;
 using Current = Umbraco.Web.Composing.Current;
 
-namespace Our.Umbraco.Honeypot.V8
+namespace Our.Umbraco.Honeypot
 {
     public class HoneypotComposer : IUserComposer
     {

@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using Our.Umbraco.Honeypot.Core;
-using Umbraco.Core;
+using System.Web.Mvc;
 using Umbraco.Forms.Core;
-using Umbraco.Forms.Core.Data.Storage;
-using Umbraco.Forms.Core.Enums;
-using Umbraco.Forms.Core.Models;
-using Umbraco.Web.Composing;
 
 namespace Our.Umbraco.Honeypot
 {
@@ -26,7 +21,7 @@ namespace Our.Umbraco.Honeypot
             HideLabel = true;
         }
 
-        private HoneypotOptions Options => Current.Factory.GetInstance<HoneypotOptions>();
+        private HoneypotOptions Options => DependencyResolver.Current.GetService<HoneypotOptions>();
 
         public override string GetDesignView()
         {
@@ -34,7 +29,7 @@ namespace Our.Umbraco.Honeypot
         }
 
         public override IEnumerable<string> ValidateField(Form form, Field field, IEnumerable<object> postedValues,
-            HttpContextBase context, IFormStorage formStorage)
+            HttpContextBase context)
         {
             var returnStrings = new List<string>();
 
