@@ -36,7 +36,6 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotFieldNames = new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
             HoneypotMessage = "Something went wrong (HP)";
             HoneypotNoTags = false;
-
         }
 #endif
 

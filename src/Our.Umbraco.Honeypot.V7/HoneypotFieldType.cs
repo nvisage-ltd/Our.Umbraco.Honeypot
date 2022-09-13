@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Mvc;
 using Umbraco.Forms.Core;
 
 namespace Our.Umbraco.Honeypot
@@ -21,8 +20,6 @@ namespace Our.Umbraco.Honeypot
             HideLabel = true;
         }
 
-        private HoneypotOptions Options => DependencyResolver.Current.GetService<HoneypotOptions>();
-
         public override string GetDesignView()
         {
             return "~/App_Plugins/Our.Umbraco.Honeypot/FieldTypes/Honeypot.html";
@@ -35,7 +32,7 @@ namespace Our.Umbraco.Honeypot
 
             if (context.ApplicationInstance.Context.IsHoneypotTrapped())
             {
-                returnStrings.Add(Options.HoneypotMessage);
+                returnStrings.Add(HoneypotOptions.For.HoneypotMessage);
             }
 
             return returnStrings;

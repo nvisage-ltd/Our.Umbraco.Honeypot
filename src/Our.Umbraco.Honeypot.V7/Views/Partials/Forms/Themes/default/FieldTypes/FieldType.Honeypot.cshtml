@@ -1,11 +1,7 @@
-﻿@using System.Web.Mvc
-@using Our.Umbraco.Honeypot
+﻿@using Our.Umbraco.Honeypot
 @model Umbraco.Forms.Mvc.Models.FieldViewModel
 
 
-@{
-  var options = DependencyResolver.Current.GetService<HoneypotOptions>();
-}
 
-@Html.HoneypotTimeField(options)
-@Html.HoneypotField(options: options)
+@Html.HoneypotTimeField(HoneypotOptions.For)
+@Html.HoneypotField(options: HoneypotOptions.For)

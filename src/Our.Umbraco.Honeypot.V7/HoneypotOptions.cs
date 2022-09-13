@@ -5,8 +5,12 @@ namespace Our.Umbraco.Honeypot
 {
     public class HoneypotOptions
     {
+        private static readonly Lazy<HoneypotOptions> Lazy = new Lazy<HoneypotOptions>(() => new HoneypotOptions());
+        public static HoneypotOptions For => Lazy.Value;
+
         public HoneypotOptions()
         {
+
             HoneypotEnableFieldCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableFieldCheck"] ?? "true");
             HoneypotEnableTimeCheck = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotEnableTimeCheck"] ?? "true");
             HoneypotPrefixFieldName = ConfigurationManager.AppSettings["HoneypotPrefixFieldName"] ?? "hp_";
@@ -18,8 +22,10 @@ namespace Our.Umbraco.Honeypot
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
             HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Something went wrong (HP)";
             HoneypotNoTags = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
+            //HoneypotNoLinks = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
 
         }
+        //public bool HoneypotNoLinks { get; set; }
 
         public bool HoneypotNoTags { get; set; }
         public bool HoneypotEnableFieldCheck { get; set; }
