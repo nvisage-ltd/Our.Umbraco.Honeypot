@@ -1,5 +1,10 @@
+#if NET5_0_OR_GREATER
+#nullable enable
+using System;
+#else
 using System;
 using System.Configuration;
+#endif
 
 namespace Our.Umbraco.Honeypot.Core
 {
@@ -58,7 +63,7 @@ namespace Our.Umbraco.Honeypot.Core
 #if NETFRAMEWORK
         public string HoneypotSuffixFieldName { get; set; }
 #else
-        public string HoneypotSuffixFieldName { get; set; }
+        public string? HoneypotSuffixFieldName { get; set; }
 #endif
 
         public string HoneypotTimeFieldName { get; set; }

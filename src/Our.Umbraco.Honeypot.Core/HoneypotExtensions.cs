@@ -6,8 +6,8 @@ using System.Web.Mvc;
 using Umbraco.Core;
 using Umbraco.Web.Composing;
 #else
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 #endif
 
 namespace Our.Umbraco.Honeypot.Core
@@ -35,8 +35,9 @@ namespace Our.Umbraco.Honeypot.Core
         }
 
 #if NETFRAMEWORK
-        public static IHtmlString HoneypotTimeField(this HtmlHelper helper, HoneypotOptions options = null)
+        public static IHtmlString HoneypotTimeField(this HtmlHelper helper, HttpRequestBase httpRequestBase, HoneypotOptions options = null)
         {
+            var value = DateTime.UtcNow.Ticks.ToString();
             if (options == null)
             {
                 options = Current.Factory.GetInstance<HoneypotOptions>();
@@ -47,18 +48,28 @@ namespace Our.Umbraco.Honeypot.Core
                 return new HtmlString("");
             }
 
+            foreach (var inputKey in httpRequestBase.Form.AllKeys)
+            {
+                if (options.HoneypotIsFieldName(inputKey))
+                {
+                    value = httpRequestBase.Form?.Get(inputKey);
+                    break;
+                }
+            }
 
             var html = new StringBuilder();
 
             _ = html.AppendLine($"<div class=\"{options.HoneypotFieldClass} hp-{options.HoneypotTimeFieldName}\" style=\"{options.HoneypotFieldStyles}\">");
-            _ = html.AppendLine($"<input type=\"hidden\" value=\"{DateTime.UtcNow.Ticks}\" name=\"{options.HoneypotTimeFieldName}\" id=\"{options.HoneypotTimeFieldName}\" />");
+            _ = html.AppendLine($"<input type=\"hidden\" value=\"{value}\" name=\"{options.HoneypotTimeFieldName}\" id=\"{options.HoneypotTimeFieldName}\" />");
             _ = html.AppendLine("</div>");
 
             return new HtmlString(html.ToString());
         }
 
-        public static IHtmlString HoneypotField(this HtmlHelper helper, string name = null, string type = "text", HoneypotOptions options = null)
+        public static IHtmlString HoneypotField(this HtmlHelper helper, HttpRequestBase httpRequestBase, string name = null, string type = "text", HoneypotOptions options = null)
         {
+            var value = string.Empty;
+
             if (options == null)
             {
                 options = Current.Factory.GetInstance<HoneypotOptions>();
@@ -69,6 +80,15 @@ namespace Our.Umbraco.Honeypot.Core
                 return new HtmlString("");
             }
 
+            foreach (var inputKey in httpRequestBase.Form.AllKeys)
+            {
+                if (options.HoneypotIsFieldName(inputKey))
+                {
+                    name = inputKey;
+                    value = httpRequestBase.Form?.Get(name);
+                    break;
+                }
+            }
             if (string.IsNullOrWhiteSpace(name))
             {
                 name = options.RandomName();
@@ -86,7 +106,7 @@ namespace Our.Umbraco.Honeypot.Core
                     $"<label for=\"{fieldName}\" class=\"{options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" placeholder=\"\" style=\"{options.HoneypotFieldStyles}\">&nbsp;</label>");
             }
 
-            _ = html.AppendLine($"<input type=\"{type}\" name=\"{fieldName}\" id=\"{fieldName}\" />");
+            _ = html.AppendLine($"<input type=\"{type}\" name=\"{fieldName}\" id=\"{fieldName}\" value=\"{value}\" />");
             _ = html.AppendLine(" </div>");
 
             return new HtmlString(html.ToString());

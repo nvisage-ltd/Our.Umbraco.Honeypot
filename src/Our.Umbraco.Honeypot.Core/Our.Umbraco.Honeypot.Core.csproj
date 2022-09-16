@@ -2,21 +2,28 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net472;net5.0;net6.0</TargetFrameworks>
-		<Description>Our.Umbraco.Honeypot.Core</Description>
+		<Description>A basic Honeypot to trap bots from posting your forms, it can be used with Umbraco Forms or on custom forms. The idea is simple, add a random hidden field, if the field is populated and posted = it's probably a bot</Description>
 		<Copyright>Björnmamman AB Sverige</Copyright>
-		<PackageProjectUrl>https://bjornmamman.se/</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/madsoulswe/Our.Umbraco.Honeypot</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/nvisage-ltd/Our.Umbraco.Honeypot</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/nvisage-ltd/Our.Umbraco.Honeypot.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>0.1.4.0-beta</Version>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<Version>0.1.4.1-beta</Version>
 		<PackageId>Our.Umbraco.Honeypot.Core</PackageId>
-		<AssemblyVersion>0.1.4.0</AssemblyVersion>
-		<FileVersion>0.1.4.0</FileVersion>
-		<Authors>Björnmamman</Authors>
-		<Company>Björnmamman AB Sweden</Company>
+		<AssemblyVersion>0.1.4.1</AssemblyVersion>
+		<FileVersion>0.1.4.1</FileVersion>
+		<Authors>Björnmamman, nvisage-gf</Authors>
+		<Company>Björnmamman AB Sweden, Nvisage ltd</Company>
 		<Product>Our.Umbraco.Honeypot.Core</Product>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes>v8 support</PackageReleaseNotes>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Our.Umbraco.Honeypot.Core</Title>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<IncludeSymbols>True</IncludeSymbols>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,17 +31,22 @@
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
-		
+
 		<None Include="..\..\icon.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
-		
+
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+
 		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+
 
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
@@ -47,5 +59,7 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Umbraco.Cms.Core" Version="10.0.0" />
 	</ItemGroup>
-
-</Project>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+	</Project>

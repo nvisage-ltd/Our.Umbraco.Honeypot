@@ -1,9 +1,8 @@
 #if NET5_0_OR_GREATER
+#nullable enable
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 
@@ -13,7 +12,7 @@ namespace Our.Umbraco.Honeypot.Core
     {
         public HoneypotFieldTagHelper(IOptions<HoneypotOptions> options)
         {
-            Name = null;
+            Name = string.Empty;
             Type = "text";
             Options = options.Value;
         }
@@ -22,6 +21,12 @@ namespace Our.Umbraco.Honeypot.Core
         public string Name { get; set; }
 
         public string Type { get; set; }
+
+        [HtmlAttributeNotBound]
+        [ViewContext]
+        public ViewContext? ViewContext { get; set; }
+
+
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -34,6 +39,21 @@ namespace Our.Umbraco.Honeypot.Core
 
             output.TagMode = TagMode.StartTagAndEndTag;
             output.TagName = "div";
+
+            var value = string.Empty;
+
+            if (ViewContext?.FormContext.HasFormData == true)
+            {
+                foreach (var inputKey in ViewContext.FormContext.FormData.Keys)
+                {
+                    if (Options.HoneypotIsFieldName(inputKey))
+                    {
+                        Name = inputKey;
+                        value = Convert.ToString(ViewContext.FormContext.FormData[Name]);
+                        break;
+                    }
+                }
+            }
 
             if (string.IsNullOrWhiteSpace(Name))
             {
@@ -51,7 +71,7 @@ namespace Our.Umbraco.Honeypot.Core
                     $"<label for=\"{fieldName}\" class=\"{Options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" placeholder=\"\" style=\"{Options.HoneypotFieldStyles}\">&nbsp;</label>");
             }
 
-            output.Content.AppendHtml($"<input type=\"{Type}\" name=\"{fieldName}\" id=\"{fieldName}\" />");
+            output.Content.AppendHtml($"<input type=\"{Type}\" name=\"{fieldName}\" id=\"{fieldName}\" value=\"{value}\" />");
         }
     }
 }

@@ -1,31 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>Our.Umbraco.Honeypot.V7</id>
-		<version>0.1.4.0-beta</version>
+		<version>0.1.4.1-beta</version>
 		<title>Our.Umbraco.Honeypot.V7</title>
 		<authors>Björnmamman, nvisage-gf</authors>
 		<owners>https://bjornmamman.se/</owners>
-		<description>Our.Umbraco.Honeypot.V7</description>
-		<summary>A basic Honeypot to trap bots from posting your forms, it can be used with Umbraco Forms or on custom forms. The idea is simple, add a random hidden field, if the field is populated and posted = it's probably a bot</summary>
+		<description>A basic Honeypot to trap bots from posting your forms, it can be used with Umbraco Forms or on custom forms. The idea is simple, add a random hidden field, if the field is populated and posted = it's probably a bot</description>
+		<releaseNotes>Supports v7, for v8 see Our.Umbraco.Honeypot.V8 and for v9 and v10 see Our.Umbraco.Honeypot</releaseNotes>
 		<language>en-GB</language>
 		<license type="expression">MIT</license>
-		<projectUrl>https://github.com/madsoulswe/Our.Umbraco.Honeypot/</projectUrl>
-		<icon>content\App_Data\Temp\icon.png</icon>
-		<!--<readme>content\App_Data\Temp\README.md</readme>-->
+		<projectUrl>https://github.com/nvisage-ltd/Our.Umbraco.Honeypot</projectUrl>
+		<icon>icon.png</icon>
+		<readme>README.md</readme>
+		<repository type="git" url="https://github.com/nvisage-ltd/Our.Umbraco.Honeypot" />
 		<dependencies>
 			<group targetFramework=".NETFramework4.5.2">
-				<dependency id="UmbracoCms.Core" version="[7.15.8,8)" />
+				<dependency id="UmbracoCms.Core" version="[7.15.9,8)" />
 				<dependency id="UmbracoForms.Core" version="[7.5.9,8)" />
 			</group>
 		</dependencies>
 	</metadata>
 	<files>
 		<file src="bin\Release\Our.Umbraco.Honeypot.V7.dll" target="lib\net452" />
+		<file src="bin\Release\Our.Umbraco.Honeypot.V7.pdb" target="lib\net452" />
 		<file src="App_Plugins\**\*.*" target="content\App_Plugins" />
 		<file src="Views\**\*.*" target="content\Views" />
-		<!--<file src="README.md" target="content\App_Data\Temp\" />-->
-		<file src="icon.png" target="content\App_Data\Temp\" />
+		<file src="README.md" target="" />
+		<file src="icon.png" target="" />
 	</files>
 </package>
 

@@ -5,8 +5,8 @@
 
 
 @{
-  HoneypotOptions options = Current.Factory.GetInstance<HoneypotOptions>();
+    HoneypotOptions options = Current.Factory.GetInstance<HoneypotOptions>();
 }
 
-@Html.HoneypotTimeField(options)
-@Html.HoneypotField(options: options)
+@Html.HoneypotTimeField(Request, options)
+@Html.HoneypotField(Request, options: options)

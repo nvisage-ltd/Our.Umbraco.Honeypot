@@ -25,12 +25,6 @@ namespace Our.Umbraco.Honeypot.Core
 
         private HoneypotOptions Options { get; }
 
-
-        //public bool IsTrapped(HttpContext httpContext)
-        //{
-        //    return httpContext.IsHoneypotTrapped();
-        //}
-
 #if NETFRAMEWORK
         public HoneypotService(HoneypotOptions options)
         {
