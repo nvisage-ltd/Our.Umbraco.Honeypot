@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using Umbraco.Core.Logging;
 using Umbraco.Forms.Core;
 
 namespace Our.Umbraco.Honeypot
 {
     public class HoneypotFieldType : FieldType
     {
+        public enum HoneypotResult
+        {
+            Pass,
+            FieldTrap,
+            TimeTrap,
+            TagTrap
+            //LinkTrap,
+        }
+
         public HoneypotFieldType()
         {
             Id = new Guid("efa3f7a1-b603-4060-b416-6449f1a029db");
@@ -30,9 +40,10 @@ namespace Our.Umbraco.Honeypot
         {
             var returnStrings = new List<string>();
 
-            if (context.ApplicationInstance.Context.IsHoneypotTrapped())
+            if (context.ApplicationInstance.Context.IsHoneypotTrapped(out var honeypotResult, out var trapFieldName))
             {
                 returnStrings.Add(HoneypotOptions.For.HoneypotMessage);
+                LogHelper.Warn<HoneypotFieldType>($"{honeypotResult} {trapFieldName}");
             }
 
             return returnStrings;

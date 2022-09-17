@@ -20,12 +20,15 @@ namespace Our.Umbraco.Honeypot
             HoneypotFieldStyles = ConfigurationManager.AppSettings["HoneypotFieldStyles"] ?? "display: none !important; position: absolute !important; left: -9000px !important;";
             HoneypotFieldClass = ConfigurationManager.AppSettings["HoneypotFieldClass"] ?? "hp-field";
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
-            HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Something went wrong (HP)";
+            HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Please check your answers, we can't accept your submission currently.";
             HoneypotNoTags = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
-            //HoneypotNoLinks = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
+            //HoneypotNoLinks = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoLinks"] ?? "false");
+            //HoneypotAllowPost = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotAllowPost"] ?? "false");
 
         }
         //public bool HoneypotNoLinks { get; set; }
+
+        //public bool HoneypotAllowPost { get; set; }
 
         public bool HoneypotNoTags { get; set; }
         public bool HoneypotEnableFieldCheck { get; set; }

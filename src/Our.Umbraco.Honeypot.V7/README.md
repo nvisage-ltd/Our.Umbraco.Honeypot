@@ -78,6 +78,6 @@ public async Task<IActionResult> Form(FormModel model)
     "HoneypotFieldStyles": "display: none !important; position: absolute !important; left: -9000px !important;",
     "HoneypotFieldClass": "hp-field",
     "HoneypotFieldNames": [ "Name", "Phone", "Comment", "Message", "Email", "Website" ],
-    "HoneypotMessage": "Something went wrong (HP)"
+    "HoneypotMessage": "Please check your answers, we can't accept your submission currently."
   }
 ```

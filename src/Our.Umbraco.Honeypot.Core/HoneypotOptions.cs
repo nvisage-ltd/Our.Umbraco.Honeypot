@@ -22,7 +22,7 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotFieldStyles = ConfigurationManager.AppSettings["HoneypotFieldStyles"] ?? "display: none !important; position: absolute !important; left: -9000px !important;";
             HoneypotFieldClass = ConfigurationManager.AppSettings["HoneypotFieldClass"] ?? "hp-field";
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
-            HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Something went wrong (HP)";
+            HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Please check your answers, we can't accept your submission currently.";
             HoneypotNoTags = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
         }
 #endif
@@ -39,7 +39,7 @@ namespace Our.Umbraco.Honeypot.Core
             HoneypotFieldStyles = "display: none !important; position: absolute !important; left: -9000px !important;";
             HoneypotFieldClass = "hp-field";
             HoneypotFieldNames = new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
-            HoneypotMessage = "Something went wrong (HP)";
+            HoneypotMessage = "Please check your answers, we can't accept your submission currently.";
             HoneypotNoTags = false;
         }
 #endif

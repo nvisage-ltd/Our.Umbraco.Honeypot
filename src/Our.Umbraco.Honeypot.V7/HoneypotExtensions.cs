@@ -3,6 +3,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using Umbraco.Core.Logging;
+using Umbraco.Forms.Core;
+using static Our.Umbraco.Honeypot.HoneypotFieldType;
 
 namespace Our.Umbraco.Honeypot
 {
@@ -14,89 +17,117 @@ namespace Our.Umbraco.Honeypot
 
         static HoneypotExtensions()
         {
-            HoneypotNoTagsRegEx = new Regex("<.*?>", RegexOptions.None, TimeSpan.FromSeconds(1));
+            if (HoneypotOptions.For.HoneypotNoTags)
+            {
+                HoneypotNoTagsRegEx = new Regex("<.*?>", RegexOptions.None, TimeSpan.FromSeconds(1));
+            }
 
-            // disable link checking for now, matches email addresses
-            //HoneypotNoLinksRegEx = new Regex("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+", RegexOptions.None, TimeSpan.FromSeconds(1));
+            //if (HoneypotOptions.For.HoneypotNoLinks)
+            //{
+            //    HoneypotNoLinksRegEx =
+            //        new Regex(
+            //            "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+",
+            //            RegexOptions.None, TimeSpan.FromSeconds(1));
+            //}
         }
 
-        public static bool IsTrapped(HttpContext httpContext, out bool fieldTrap, out bool timeTrap)
+        public static bool IsTrapped(HttpContext httpContext, out HoneypotResult honeypotResult, out string trappedFieldName)
         {
-            fieldTrap = false;
-            timeTrap = false;
+            honeypotResult = HoneypotResult.Pass;
+            trappedFieldName = string.Empty;
 
-            if (!httpContext.Items.Contains(HttpContextItemName) || (httpContext.Items[HttpContextItemName] is bool value) == false)
+            try
             {
 
-                var trapped = false;
-
-                if (HoneypotOptions.For.HoneypotEnableFieldCheck)
+                if (!httpContext.Items.Contains(HttpContextItemName) ||
+                    (httpContext.Items[HttpContextItemName] is bool value) == false)
                 {
-                    //check fields
-                    foreach (var inputKey in httpContext.Request.Form.AllKeys)
+
+                    var trapped = false;
+
+                    if (HoneypotOptions.For.HoneypotEnableFieldCheck)
                     {
-                        if (HoneypotOptions.For.HoneypotIsFieldName(inputKey) && !string.IsNullOrEmpty(httpContext.Request.Form[inputKey]))
+                        //check fields
+                        foreach (var inputKey in httpContext.Request.Form.AllKeys)
                         {
-                            fieldTrap = true;
-                            trapped = true;
-                            break;
-                        }
-                        if (HoneypotOptions.For.HoneypotNoTags && httpContext.Request.Form[inputKey] != null)
-                        {
-                            var isValid = !HoneypotNoTagsRegEx.IsMatch(httpContext.Request.Form[inputKey]);
-                            if (!isValid)
+                            if (HoneypotOptions.For.HoneypotIsFieldName(inputKey) &&
+                                !string.IsNullOrEmpty(httpContext.Request.Form[inputKey]))
                             {
-                                fieldTrap = true;
+                                honeypotResult = HoneypotResult.FieldTrap;
+                                trappedFieldName = inputKey;
                                 trapped = true;
                                 break;
                             }
+
+                            if (HoneypotOptions.For.HoneypotNoTags && httpContext.Request.Form[inputKey] != null)
+                            {
+                                var isValid = !HoneypotNoTagsRegEx.IsMatch(httpContext.Request.Form[inputKey]);
+                                if (!isValid)
+                                {
+                                    honeypotResult = HoneypotResult.TagTrap;
+                                    trappedFieldName = inputKey;
+                                    trapped = true;
+                                    break;
+                                }
+                            }
+
+                            //if (HoneypotOptions.For.HoneypotNoLinks && httpContext.Request.Form[inputKey] != null &&
+                            //    HoneypotOptions.For.HoneypotIsFieldName(inputKey) || !httpContext.Request.Form[inputKey]
+                            //        .ToLowerInvariant().Contains("email"))
+                            //{
+                            //    var isValid = !HoneypotNoLinksRegEx.IsMatch(httpContext.Request.Form[inputKey]);
+                            //    if (!isValid)
+                            //    {
+                            //        honeypotResult = HoneypotResult.LinkTrap;
+                            //        trappedFieldName = inputKey;
+                            //        trapped = true;
+                            //        break;
+                            //    }
+                            //}
                         }
-                        //if (HoneypotOptions.For.HoneypotNoLinks && httpContext.Request.Form[inputKey] != null)
-                        //{
-                        //    var isValid = !HoneypotNoLinksRegEx.IsMatch(httpContext.Request.Form[inputKey]);
-                        //    if (!isValid)
-                        //    {
-                        //        fieldTrap = true;
-                        //        trapped = true;
-                        //        break;
-                        //    }
-                        //}
                     }
-                }
 
-                if (HoneypotOptions.For.HoneypotEnableTimeCheck && !trapped)
-                {
-                    //check time
-                    if (httpContext.Request.Form[HoneypotOptions.For.HoneypotTimeFieldName] is string timeValue)
+                    if (HoneypotOptions.For.HoneypotEnableTimeCheck && !trapped)
                     {
-                        TimeSpan diff = DateTime.UtcNow - new DateTime(long.Parse(timeValue), DateTimeKind.Utc);
+                        //check time
+                        if (httpContext.Request.Form[HoneypotOptions.For.HoneypotTimeFieldName] is string timeValue)
+                        {
+                            TimeSpan diff = DateTime.UtcNow - new DateTime(long.Parse(timeValue), DateTimeKind.Utc);
 
-                        timeTrap = true;
-                        trapped = diff < HoneypotOptions.For.HoneypotMinTimeDuration;
+                            honeypotResult = HoneypotResult.TimeTrap;
+                            trappedFieldName = HoneypotOptions.For.HoneypotTimeFieldName;
+                            trapped = diff < HoneypotOptions.For.HoneypotMinTimeDuration;
+                        }
                     }
+
+                    httpContext.Items.Add(HttpContextItemName, trapped);
+                    LogHelper.Info<HoneypotResult>($"{honeypotResult} {trappedFieldName}");
+
+                    return trapped;
                 }
 
-                httpContext.Items.Add(HttpContextItemName, trapped);
-
-                return trapped;
-            }
-            else
-            {
                 return value;
             }
+            catch (Exception e)
+            {
+                LogHelper.Error<HoneypotResult>($"{honeypotResult} {trappedFieldName}", e);
+                return false;
+            }
+
         }
 
         /// <summary>
         /// IsHoneypotTrapped
         /// </summary>
         /// <param name="httpContext"></param>
+        /// <param name="honeypotResult"></param>
+        /// <param name="trapFieldName"></param>
         /// <returns></returns>
         ///
-        public static bool IsHoneypotTrapped(this HttpContext httpContext)
+        public static bool IsHoneypotTrapped(this HttpContext httpContext, out HoneypotResult honeypotResult, out string trapFieldName)
         {
 
-            var isTrapped = IsTrapped(httpContext, out _, out _);
-
+            var isTrapped = IsTrapped(httpContext, out honeypotResult, out trapFieldName);
             return isTrapped;
         }
 
@@ -112,12 +143,16 @@ namespace Our.Umbraco.Honeypot
                 return new HtmlString("");
             }
             var value = DateTime.UtcNow.Ticks.ToString();
-            foreach (var inputKey in httpRequestBase.Form.AllKeys)
+
+            if (Convert.ToBoolean(Configuration.GetSetting("EnableAntiForgeryToken")))
             {
-                if (options.HoneypotIsFieldName(inputKey))
+                foreach (var inputKey in httpRequestBase.Form.AllKeys)
                 {
-                    value = httpRequestBase.Form?.Get(inputKey);
-                    break;
+                    if (options.HoneypotIsFieldName(inputKey))
+                    {
+                        value = httpRequestBase.Form?.Get(inputKey);
+                        break;
+                    }
                 }
             }
 
@@ -145,13 +180,16 @@ namespace Our.Umbraco.Honeypot
                 return new HtmlString("");
             }
 
-            foreach (var inputKey in httpRequestBase.Form.AllKeys)
+            if (Convert.ToBoolean(Configuration.GetSetting("EnableAntiForgeryToken")))
             {
-                if (HoneypotOptions.For.HoneypotIsFieldName(inputKey))
+                foreach (var inputKey in httpRequestBase.Form.AllKeys)
                 {
-                    name = inputKey;
-                    value = httpRequestBase.Form?.Get(name);
-                    break;
+                    if (HoneypotOptions.For.HoneypotIsFieldName(inputKey))
+                    {
+                        name = inputKey;
+                        value = httpRequestBase.Form?.Get(name);
+                        break;
+                    }
                 }
             }
 
