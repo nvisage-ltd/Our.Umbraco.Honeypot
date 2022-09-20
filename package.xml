@@ -3,7 +3,7 @@
 	<info>
 		<package>
 			<name>Our.Umbraco.Honeypot</name>
-			<version>0.1.4.4-beta</version>
+			<version>0.1.4.5-beta</version>
 			<iconUrl></iconUrl>
 			<licence url="https://opensource.org/licenses/MIT">MIT</licence>
 			<url>https://our.umbraco.com</url>

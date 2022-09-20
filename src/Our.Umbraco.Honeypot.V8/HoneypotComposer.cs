@@ -10,6 +10,7 @@ namespace Our.Umbraco.Honeypot
     {
         public void Compose(Composition composition)
         {
+            composition.Register<HoneypotOptions>(HoneypotOptions.For);
             UmbracoFormsController.FormValidate += FormsController_FormValidate;
         }
 
