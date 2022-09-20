@@ -21,15 +21,12 @@ namespace Our.Umbraco.Honeypot.Core
     {
         public const string HttpContextItemName = "Our.Umbraco.Honeypot.IsHoneypotTrapped";
 
-        private readonly Regex _honeypotNoTagsRegEx;
-
         private HoneypotOptions Options { get; }
 
 #if NETFRAMEWORK
         public HoneypotService(HoneypotOptions options)
         {
             Options = options;
-            _honeypotNoTagsRegEx = new Regex("<.*?>", RegexOptions.None, TimeSpan.FromSeconds(1));
         }
 
         public bool IsTrapped(HttpContext httpContext, out bool fieldTrap, out bool timeTrap)
@@ -52,17 +49,6 @@ namespace Our.Umbraco.Honeypot.Core
                             fieldTrap = true;
                             trapped = true;
                             break;
-                        }
-
-                        if (Options.HoneypotNoTags && httpContext.Request.Form[inputKey] != null)
-                        {
-                            var isValid = !_honeypotNoTagsRegEx.IsMatch(httpContext.Request.Form[inputKey]);
-                            if (!isValid)
-                            {
-                                fieldTrap = true;
-                                trapped = true;
-                                break;
-                            }
                         }
                     }
                 }
@@ -94,8 +80,6 @@ namespace Our.Umbraco.Honeypot.Core
         public HoneypotService(IOptions<HoneypotOptions> options)
         {
             Options = options.Value;
-            _honeypotNoTagsRegEx = new Regex("<.*?>", RegexOptions.None, TimeSpan.FromSeconds(1));
-
         }
 
         public bool IsTrapped(HttpContext httpContext, out bool fieldTrap, out bool timeTrap)
@@ -113,10 +97,6 @@ namespace Our.Umbraco.Honeypot.Core
                     //check fields
                     fieldTrap = true;
                     trapped = httpContext.Request.Form.Any(x => Options.HoneypotIsFieldName(x.Key) && x.Value.Any(v => !string.IsNullOrEmpty(v)));
-                    if (!trapped && Options.HoneypotNoTags)
-                    {
-                        trapped = httpContext.Request.Form.Any(x => x.Value.Any(v => _honeypotNoTagsRegEx.IsMatch(v)));
-                    }
                 }
 
                 if (Options.HoneypotEnableTimeCheck && !trapped)

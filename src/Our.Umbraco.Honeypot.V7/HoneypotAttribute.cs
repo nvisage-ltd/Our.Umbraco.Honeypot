@@ -10,12 +10,12 @@ namespace Our.Umbraco.Honeypot
             base.OnActionExecuting(context);
 
 
-            var isTrapped = context.HttpContext.ApplicationInstance.Context.IsHoneypotTrapped(out var honeypotResult, out var trapFieldName);
+            var isTrapped = context.HttpContext.ApplicationInstance.Context.IsHoneypotTrapped(out bool fieldTrap, out bool timeTrap);
 
             if (isTrapped)
             {
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Result = new ContentResult() { Content = $"bot detection {honeypotResult} {trapFieldName}", ContentType = "text/plain" };
+                context.Result = new ContentResult() { Content = $"bot detection", ContentType = "text/plain" };
             }
         }
     }

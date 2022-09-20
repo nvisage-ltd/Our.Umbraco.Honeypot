@@ -21,16 +21,9 @@ namespace Our.Umbraco.Honeypot
             HoneypotFieldClass = ConfigurationManager.AppSettings["HoneypotFieldClass"] ?? "hp-field";
             HoneypotFieldNames = ConfigurationManager.AppSettings["HoneypotFieldNames"]?.Split(',') ?? new[] { "Name", "Phone", "Comment", "Message", "Email", "Website" };
             HoneypotMessage = ConfigurationManager.AppSettings["HoneypotMessage"] ?? "Please check your answers, we can't accept your submission currently.";
-            HoneypotNoTags = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoTags"] ?? "false");
-            //HoneypotNoLinks = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotNoLinks"] ?? "false");
-            //HoneypotAllowPost = Convert.ToBoolean(ConfigurationManager.AppSettings["HoneypotAllowPost"] ?? "false");
 
         }
-        //public bool HoneypotNoLinks { get; set; }
 
-        //public bool HoneypotAllowPost { get; set; }
-
-        public bool HoneypotNoTags { get; set; }
         public bool HoneypotEnableFieldCheck { get; set; }
 
         public string HoneypotMessage { get; set; }
