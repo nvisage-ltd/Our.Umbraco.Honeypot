@@ -8,14 +8,12 @@ namespace Our.Umbraco.Honeypot
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-
-
             var isTrapped = context.HttpContext.ApplicationInstance.Context.IsHoneypotTrapped();
 
             if (isTrapped)
             {
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Result = new ContentResult() { Content = $"bot detection", ContentType = "text/plain" };
+                context.Result = new ContentResult { Content = "bot detection", ContentType = "text/plain" };
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using Our.Umbraco.Honeypot.Core;
 using Umbraco.Core;
 using Umbraco.Forms.Core;
 using Umbraco.Forms.Core.Data.Storage;
@@ -37,7 +36,6 @@ namespace Our.Umbraco.Honeypot
             HttpContextBase context, IFormStorage formStorage)
         {
             var returnStrings = new List<string>();
-
             if (context.ApplicationInstance.Context.IsHoneypotTrapped())
             {
                 returnStrings.Add(Options.HoneypotMessage);

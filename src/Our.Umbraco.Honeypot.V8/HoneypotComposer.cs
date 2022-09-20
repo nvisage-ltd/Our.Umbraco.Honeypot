@@ -1,5 +1,4 @@
-﻿using Our.Umbraco.Honeypot.Core;
-using Umbraco.Core;
+﻿using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Forms.Mvc;
 using Umbraco.Forms.Web.Controllers;
@@ -24,8 +23,7 @@ namespace Our.Umbraco.Honeypot
             }
 
             var controller = sender as UmbracoFormsController;
-
-            if (e.Context.IsHoneypotTrapped())
+            if (e.Context.IsHoneypotTrapped(out _, out _))
             {
                 controller?.ModelState.AddModelError("error", options.HoneypotMessage);
             }

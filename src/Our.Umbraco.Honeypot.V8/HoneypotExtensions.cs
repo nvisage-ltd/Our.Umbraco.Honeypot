@@ -2,7 +2,6 @@
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Umbraco.Core.Logging;
 
 namespace Our.Umbraco.Honeypot
 {
@@ -27,52 +26,44 @@ namespace Our.Umbraco.Honeypot
             fieldTrap = false;
             timeTrap = false;
 
-            try
+            if (!httpContext.Items.Contains(HttpContextItemName) ||
+                httpContext.Items[HttpContextItemName] is bool value == false)
             {
-                if (!httpContext.Items.Contains(HttpContextItemName) ||
-                    httpContext.Items[HttpContextItemName] is bool value == false)
+                var trapped = false;
+
+                if (HoneypotOptions.For.HoneypotEnableFieldCheck)
                 {
-                    var trapped = false;
-
-                    if (HoneypotOptions.For.HoneypotEnableFieldCheck)
+                    //check fields
+                    foreach (var inputKey in httpContext.Request.Form.AllKeys)
                     {
-                        //check fields
-                        foreach (var inputKey in httpContext.Request.Form.AllKeys)
+                        if (HoneypotOptions.For.HoneypotIsFieldName(inputKey) &&
+                            !string.IsNullOrEmpty(httpContext.Request.Form[inputKey]))
                         {
-                            if (HoneypotOptions.For.HoneypotIsFieldName(inputKey) &&
-                                !string.IsNullOrEmpty(httpContext.Request.Form[inputKey]))
-                            {
-                                fieldTrap = true;
-                                trapped = true;
-                                break;
-                            }
+                            fieldTrap = true;
+                            trapped = true;
+                            break;
                         }
                     }
-
-                    if (HoneypotOptions.For.HoneypotEnableTimeCheck && !trapped)
-                    {
-                        //check time
-                        if (httpContext.Request.Form[HoneypotOptions.For.HoneypotTimeFieldName] is string timeValue)
-                        {
-                            TimeSpan diff = DateTime.UtcNow - new DateTime(long.Parse(timeValue), DateTimeKind.Utc);
-
-                            timeTrap = true;
-                            trapped = diff < HoneypotOptions.For.HoneypotMinTimeDuration;
-                        }
-                    }
-
-                    httpContext.Items.Add(HttpContextItemName, trapped);
-
-                    return trapped;
                 }
 
-                return value;
+                if (HoneypotOptions.For.HoneypotEnableTimeCheck && !trapped)
+                {
+                    //check time
+                    if (httpContext.Request.Form[HoneypotOptions.For.HoneypotTimeFieldName] is string timeValue)
+                    {
+                        TimeSpan diff = DateTime.UtcNow - new DateTime(long.Parse(timeValue), DateTimeKind.Utc);
+
+                        timeTrap = true;
+                        trapped = diff < HoneypotOptions.For.HoneypotMinTimeDuration;
+                    }
+                }
+
+                httpContext.Items.Add(HttpContextItemName, trapped);
+
+                return trapped;
             }
-            catch (Exception e)
-            {
-                LogHelper.Error<HoneypotFieldType>(e.Message, e);
-                return false;
-            }
+
+            return value;
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Our.Umbraco.Honeypot
         {
             var returnStrings = new List<string>();
 
-            if (context.ApplicationInstance.Context.IsHoneypotTrapped(out bool fieldTrap, out bool timeTrap))
+            if (context.ApplicationInstance.Context.IsHoneypotTrapped())
             {
                 returnStrings.Add(HoneypotOptions.For.HoneypotMessage);
             }

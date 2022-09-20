@@ -9,10 +9,10 @@
 		<RepositoryType>git</RepositoryType>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>0.1.4.3-beta</Version>
+		<Version>0.1.4.4-beta</Version>
 		<PackageId>Our.Umbraco.Honeypot.V8</PackageId>
-		<AssemblyVersion>0.1.4.3</AssemblyVersion>
-		<FileVersion>0.1.4.3</FileVersion>
+		<AssemblyVersion>0.1.4.4</AssemblyVersion>
+		<FileVersion>0.1.4.4</FileVersion>
 		<Authors>Björnmamman, nvisage-gf</Authors>
 		<Company>Björnmamman AB Sweden, Nvisage ltd</Company>
 		<Product>Our.Umbraco.Honeypot.V8</Product>
@@ -69,10 +69,6 @@
 		<PackageReference Include="UmbracoCms.Core" Version="8.18.5" />
 		<PackageReference Include="UmbracoCms.Web" Version="8.18.5" />
 		<PackageReference Include="UmbracoForms.Core" Version="8.13.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Our.Umbraco.Honeypot.Core\Our.Umbraco.Honeypot.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
