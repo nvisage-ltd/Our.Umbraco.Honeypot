@@ -23,7 +23,7 @@ namespace Our.Umbraco.Honeypot
             }
 
             var controller = sender as UmbracoFormsController;
-            if (e.Context.IsHoneypotTrapped(out _, out _))
+            if (e.Context.IsHoneypotTrapped())
             {
                 controller?.ModelState.AddModelError("error", options.HoneypotMessage);
             }
