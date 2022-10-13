@@ -8,10 +8,10 @@
 		<RepositoryUrl>https://github.com/nvisage-ltd/Our.Umbraco.Honeypot.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<Version>0.1.4.5-beta</Version>
+		<Version>0.1.4.6-beta</Version>
 		<PackageId>Our.Umbraco.Honeypot.Core</PackageId>
-		<AssemblyVersion>0.1.4.5</AssemblyVersion>
-		<FileVersion>0.1.4.5</FileVersion>
+		<AssemblyVersion>0.1.4.6</AssemblyVersion>
+		<FileVersion>0.1.4.6</FileVersion>
 		<Authors>Björnmamman, nvisage-gf</Authors>
 		<Company>Björnmamman AB Sweden, Nvisage ltd</Company>
 		<Product>Our.Umbraco.Honeypot.Core</Product>
@@ -24,6 +24,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<DebugType>embedded</DebugType>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
