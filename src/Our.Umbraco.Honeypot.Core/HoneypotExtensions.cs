@@ -103,7 +103,7 @@ namespace Our.Umbraco.Honeypot.Core
             if (type == "text")
             {
                 _ = html.AppendLine(
-                    $"<label for=\"{fieldName}\" class=\"{options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" placeholder=\"\" style=\"{options.HoneypotFieldStyles}\">&nbsp;</label>");
+                    $"<label for=\"{fieldName}\" class=\"{options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" style=\"{options.HoneypotFieldStyles}\">&nbsp;</label>");
             }
 
             _ = html.AppendLine($"<input type=\"{type}\" name=\"{fieldName}\" id=\"{fieldName}\" value=\"{value}\" />");

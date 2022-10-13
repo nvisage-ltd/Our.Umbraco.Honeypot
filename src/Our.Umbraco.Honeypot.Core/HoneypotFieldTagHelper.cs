@@ -68,7 +68,7 @@ namespace Our.Umbraco.Honeypot.Core
             if (Type == "text")
             {
                 output.Content.AppendHtml(
-                    $"<label for=\"{fieldName}\" class=\"{Options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" placeholder=\"\" style=\"{Options.HoneypotFieldStyles}\">&nbsp;</label>");
+                    $"<label for=\"{fieldName}\" class=\"{Options.HoneypotFieldClass} {fieldName}\" title=\"{fieldName}\" style=\"{Options.HoneypotFieldStyles}\">&nbsp;</label>");
             }
 
             output.Content.AppendHtml($"<input type=\"{Type}\" name=\"{fieldName}\" id=\"{fieldName}\" value=\"{value}\" />");
